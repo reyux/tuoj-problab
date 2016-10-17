@@ -1,0 +1,3 @@
+[submodule "probSample"]
+	path = probSample
+	url = https://github.com/reyux/tuoj-problem-sample
