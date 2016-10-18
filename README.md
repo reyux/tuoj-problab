@@ -1,37 +1,54 @@
 # TUOJ Problem Lab
 
-这是 TUOJ 开发的子项目 ProblemLab。
+This is the submodules ProblemLab of TUOJ.
 
-## 进度
+## Progress
 
-+ format (ing.)
-+ interaction (ing.)
-+ omniauth
-+ limitation
++ prob format (fin.)
++ deploy (ing.)
++ gitlab
+	+ omniauth
+	+ limitation
 
-## 题目格式
+## Prob Format
 
-格式样例见 ProbSample 。目录的必要结构如下：
+A problem sample is showed in ProbSample.
+
+The essential directory structure：
 
 	- problem
-		- doc \\ 问题描述、题解等，非评测环境相关
-		- files \\ 未编译评测环境
-		- data \\ 测试数据
-		- etc \\ 配置文件
-			- conf \\ 题目信息
-			- init \\ 部署引导
-		[- test] \\ 提交测试，标程等
-		[- down] \\ 下发文件
+		- files			\\ the files irrelevant to deployment, judgement and so on, like description, tutorial, etc.  
+		- source		\\ source code of judger, validator, generator, etc. 
+		- data			\\ the data for judgement
+			[- data.gen]	\\ you can use script to generate a data set, with the `.gen` suffix.  
+		- etc			
+			- conf.json		\\ a json file contains the problem's details
+			- deploy.init	\\ the deploy script
+		[- test] 		\\ the submission for testing
 		[- your other files: README.md, etc.]
 
-## 部署
+### config
 
-`etc/init` 用于题目的部署。包括 make 评测环境、数据等。`init` 支持以下命令：
+(to be finished)
 
-	compile <file> \\ 按 file 的后缀名编译
-	make		   \\ 调用 files/make
-	gendata 	   \\ 按 conf 申明，事先调用 generator 生成数据
+### generate data
 
-你可以设置每个命令所需要的权限。一般来说 make 和 gendata 都是应严格限制的命令。 
+<http://polygon.codeforces.com> allows a dynamic way to provide data using a generating script. Here we reserve the interface as the `.gen` file in `data`.
 
-##
+## Deploy
+
+You may need to do some initilization after clone as there is usually no executable file but the source code stored in repository.
+Actually you cannot modify anything in workdir or unexcepted error will be raised when pulling update or doing other git operations, 
+hence you must create a new folder at somewhere outside, copying those source codes into it and building the judge environment.
+
+`etc/deploy.init` states the deployment, with each line contains a single command. Here two commands maybe useful are showed below. You may need to see `ProbSample/etc/deploy.init` for more details.
+
+	compile <file>		\\ compile source/<file> in term of its suffix.
+	make <makefile>		\\ use source/<makefile> to initialize, this command should be limited at server.
+
+In ServerSample we give a python sample `deploySample.py` to interpret the script.
+
+## Testing
+
+(to be finished)
+
